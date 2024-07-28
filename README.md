@@ -45,14 +45,14 @@ Azure Movie Database is a Python project that retrieves movie data from the OMDB
 3. Create a `creds.py` file in the project root directory and add your credentials or alternatively you can use `.env`.
 
 ```python
-# creds.py
-cosmos_endpoint = "your_cosmos_db_endpoint"
-cosmos_key = "your_cosmos_db_key"
-cosmos_database_name = "your_cosmos_db_name"
-cosmos_container_name = "your_cosmos_db_container_name"
-blob_connection_string = "your_blob_storage_connection_string"
-blob_container_name = "your_blob_container_name"
-omdb_api_key = "your_omdb_api_key"
+   # creds.py
+   cosmos_endpoint = "your_cosmos_db_endpoint"
+   cosmos_key = "your_cosmos_db_key"
+   cosmos_database_name = "your_cosmos_db_name"
+   cosmos_container_name = "your_cosmos_db_container_name"
+   blob_connection_string = "your_blob_storage_connection_string"
+   blob_container_name = "your_blob_container_name"
+   omdb_api_key = "your_omdb_api_key"
 ```
 
 ## Usage
