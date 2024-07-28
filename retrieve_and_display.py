@@ -1,17 +1,19 @@
 from azure.cosmos import CosmosClient, exceptions
-from fetch_and_store import fetch_and_store_movie_data  # Import the new function
+from fetch_and_store import (
+    fetch_and_store_movie_data,
+    container,
+)
 import creds
 
-# Azure Cosmos DB details
+# Azure Cosmos DB details (reusing the container initialized in fetch_and_store for simplicity)
 cosmos_client = CosmosClient(creds.cosmos_endpoint, creds.cosmos_key)
 database = cosmos_client.get_database_client(creds.cosmos_database_name)
-container = database.get_container_client(creds.cosmos_container_name)
 
 
 def retrieve_movie_data(movie_title):
     try:
-        query = "SELECT * FROM c WHERE c.Title=@title"
-        parameters = [{"name": "@title", "value": movie_title}]
+        query = "SELECT * FROM c WHERE LOWER(c.Title) = @title"
+        parameters = [{"name": "@title", "value": movie_title.lower()}]
         items = list(
             container.query_items(
                 query=query, parameters=parameters, enable_cross_partition_query=True
@@ -50,11 +52,11 @@ def display_movie_data(movie_data):
 
 
 def main():
-    movie_title = "frozen"  # Example movie title to retrieve
-    movie_data = retrieve_movie_data(movie_title)
+    movie_title = "FRozEn"  # Example movie title to retrieve
+    movie_data = retrieve_movie_data(movie_title.title())
 
     if not movie_data:
-        # Fetch and store data on-demand if not found in database * NOT WORKING *
+        # Fetch and store data on-demand if not found in database
         movie_data = fetch_and_store_movie_data(movie_title)
         if movie_data:
             movie_data = [movie_data]

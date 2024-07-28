@@ -51,31 +51,7 @@ def save_movie_data_to_cosmos(movie_data, image_url):
     container.upsert_item(movie_data)
 
 
-def retrieve_movie_data(movie_title):
-    try:
-        query = "SELECT * FROM c WHERE c.Title=@title"
-        parameters = [{"name": "@title", "value": movie_title}]
-        items = list(
-            container.query_items(
-                query=query, parameters=parameters, enable_cross_partition_query=True
-            )
-        )
-        return items if items else None
-    except exceptions.CosmosResourceNotFoundError:
-        print(f"No data found for movie: {movie_title}")
-        return None
-    except exceptions.CosmosHttpResponseError as e:
-        print(f"An error occurred: {e}")
-        return None
-
-
 def fetch_and_store_movie_data(movie_title):
-    existing_movie = retrieve_movie_data(movie_title)
-
-    if existing_movie:
-        print(f"Movie data for '{movie_title}' already exists in Cosmos DB.")
-        return existing_movie
-
     movie_data = fetch_movie_data(movie_title)
     print(f"Fetched movie data: {movie_data}")  # Debugging line
 
