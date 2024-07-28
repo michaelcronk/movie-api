@@ -52,8 +52,8 @@ def display_movie_data(movie_data):
 
 
 def main():
-    movie_title = "FRozEn"  # Example movie title to retrieve
-    movie_data = retrieve_movie_data(movie_title.title())
+    movie_title = input("What movie would you like to know about: ")
+    movie_data = retrieve_movie_data(movie_title)
 
     if not movie_data:
         # Fetch and store data on-demand if not found in database
