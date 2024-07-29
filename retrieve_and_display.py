@@ -28,40 +28,53 @@ def retrieve_movie_data(movie_title):
         return None
 
 
-def display_movie_data(movie_data):
+def display_movie_data(movie_data, display_year_only=False):
     if not movie_data:
         print("No movie data to display.")
         return
 
     for item in movie_data:
-        print(f"Title: {item.get('Title')}")
-        print(f"Year: {item.get('Year')}")
-        print(f"Rated: {item.get('Rated')}")
-        print(f"Released: {item.get('Released')}")
-        print(f"Runtime: {item.get('Runtime')}")
-        print(f"Genre: {item.get('Genre')}")
-        print(f"Director: {item.get('Director')}")
-        print(f"Writer: {item.get('Writer')}")
-        print(f"Actors: {item.get('Actors')}")
-        print(f"Plot: {item.get('Plot')}")
-        print(f"Language: {item.get('Language')}")
-        print(f"Country: {item.get('Country')}")
-        print(f"Awards: {item.get('Awards')}")
-        print(f"Poster URL: {item.get('poster_url')}")
-        print("------------------------------------------------------------")
+        if display_year_only:
+            print(f"{item.get('Title')} came out in {item.get('Year')}")
+        else:
+            print(f"Title: {item.get('Title')}")
+            print(f"Year: {item.get('Year')}")
+            print(f"Rated: {item.get('Rated')}")
+            print(f"Released: {item.get('Released')}")
+            print(f"Runtime: {item.get('Runtime')}")
+            print(f"Genre: {item.get('Genre')}")
+            print(f"Director: {item.get('Director')}")
+            print(f"Writer: {item.get('Writer')}")
+            print(f"Actors: {item.get('Actors')}")
+            print(f"Plot: {item.get('Plot')}")
+            print(f"Language: {item.get('Language')}")
+            print(f"Country: {item.get('Country')}")
+            print(f"Awards: {item.get('Awards')}")
+            print(f"Poster URL: {item.get('poster_url')}")
+            print("------------------------------------------------------------")
 
 
 def main():
-    movie_title = input("What movie would you like to know about: ")
-    movie_data = retrieve_movie_data(movie_title)
+    user_input = input("Enter the movie title: ").strip()
+    display_year_only_input = (
+        input("Do you want to display only the year or all info? (year/all): ")
+        .strip()
+        .lower()
+    )
+
+    display_year_only = False
+    movie_data = retrieve_movie_data(user_input)
 
     if not movie_data:
         # Fetch and store data on-demand if not found in database
-        movie_data = fetch_and_store_movie_data(movie_title)
+        movie_data = fetch_and_store_movie_data(user_input)
         if movie_data:
             movie_data = [movie_data]
 
-    display_movie_data(movie_data)
+    if display_year_only_input in {"year", "y"}:
+        display_year_only = True
+
+    display_movie_data(movie_data, display_year_only)
 
 
 if __name__ == "__main__":
