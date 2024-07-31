@@ -53,17 +53,18 @@ def display_movie_data(movie_data, display_year_only=False):
             print(f"Language: {item.get('Language')}")
             print(f"Country: {item.get('Country')}")
             print(f"Awards: {item.get('Awards')}")
-            print(f"Poster URL: {item.get('poster_url')}")
+            if item.get("poster_url"):  # Temp download and display of movie poster
+                download_and_display_image(item.get("poster_url"))
             print("------------------------------------------------------------")
 
-            poster_url = item.get("poster_url")
-            if poster_url and poster_url != "N/A":
-                try:
-                    response = requests.get(poster_url)
-                    img = Image.open(BytesIO(response.content))
-                    img.show()
-                except Exception as e:
-                    print(f"Error displaying poster: {e}")
+
+def download_and_display_image(url):
+    try:
+        response = requests.get(url)
+        image = Image.open(BytesIO(response.content))  # Stores image in memory
+        image.show()
+    except Exception as e:
+        print(f"Error downloading or displaying image: {e}")
 
 
 def main():
