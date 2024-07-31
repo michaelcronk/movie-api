@@ -3,6 +3,9 @@ from fetch_and_store import (
     fetch_and_store_movie_data,
     container,
 )
+import requests
+from PIL import Image
+from io import BytesIO
 import creds
 
 # Azure Cosmos DB details (reusing the container initialized in fetch_and_store for simplicity)
@@ -52,6 +55,15 @@ def display_movie_data(movie_data, display_year_only=False):
             print(f"Awards: {item.get('Awards')}")
             print(f"Poster URL: {item.get('poster_url')}")
             print("------------------------------------------------------------")
+
+            poster_url = item.get("poster_url")
+            if poster_url and poster_url != "N/A":
+                try:
+                    response = requests.get(poster_url)
+                    img = Image.open(BytesIO(response.content))
+                    img.show()
+                except Exception as e:
+                    print(f"Error displaying poster: {e}")
 
 
 def main():
