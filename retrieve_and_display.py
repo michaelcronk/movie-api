@@ -3,9 +3,9 @@ from fetch_and_store import (
     fetch_and_store_movie_data,
     container,
 )
-import requests
 from PIL import Image
 from io import BytesIO
+import requests
 import creds
 
 # Azure Cosmos DB details (reusing the container initialized in fetch_and_store for simplicity)
