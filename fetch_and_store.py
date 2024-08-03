@@ -1,7 +1,7 @@
 import requests
 import uuid
 import creds
-from azure.cosmos import exceptions, CosmosClient, PartitionKey
+from azure.cosmos import CosmosClient, PartitionKey
 from azure.storage.blob import BlobServiceClient
 
 # OMDB API details
