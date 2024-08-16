@@ -1,3 +1,4 @@
 azure-cosmos
 azure-storage-blob
 requests
+Pillow
